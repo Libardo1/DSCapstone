@@ -274,7 +274,7 @@ system.time(ng3Tr <- ng3p2(ng3Tr))
 #61.84    8.79  342.28 
 write.csv(ng3Tr, "./pdata/ng3Tr.csv")
 
-#NG3
+#NG4
 blogTrA <- blogTr[1:300000]
 blogTrB <- blogTr[300001:600000]
 blogTrC <- blogTr[600001:length(blogTr)]
@@ -304,11 +304,10 @@ system.time(ng4p1twitTrB <- ng4p1(twitTrB))
 #about the same
 system.time(ng4p1twitTrC <- ng4p1(twitTrC))
 #user  system elapsed 
-#425.73   19.35 1525.78
+# 425.38    1.69  428.66
 
 system.time(ng4twitTrComp <- rbind(ng4p1twitTrA, ng4p1twitTrB, ng4p1twitTrC))
 system.time(ng4p2atwitTr <- ng4p2a(ng4twitTrComp))
-
 system.time(write.csv(ng4p2atwitTr, "./pdata/ng4p2atwitTr.csv"))
 
 newsTrA <- newsTr[1:250000]
@@ -318,22 +317,34 @@ newsTrC <- newsTr[500001:length(newsTr)]
 system.time(ng4p1newsTrA <- ng4p1(newsTrA))
 system.time(ng4p1newsTrB <- ng4p1(newsTrB))
 system.time(ng4p1newsTrC <- ng4p1(newsTrC))
+#user  system elapsed #on average
+#368.93    1.67  371.76 
 
-#average processing
-#user  system elapsed 
-#255.72    1.29  258.35 
+system.time(ng4newsTrComp <- rbind(ng4p1newsTrA, ng4p1newsTrB, ng4p1newsTrC))
+system.time(ng4p2anewsTr <- ng4p2a(ng4newsTrComp))
+system.time(write.csv(ng4p2anewsTr, "./pdata/ng4p2anewsTr.csv"))
 
-system.time(ng4Tr <- rbind(ng4p1blogTrA, ng4p1blogTrB, ng4p1blogTrC,
-               ng4p1twitTrA, ng4p1twitTrB, ng4p1twitTrC,
-               ng4p1newsTrA, ng4p1newsTrB, ng4p1newsTrC))
-
+ng4p2ablogTr <- read.csv("./pdata/ng4p2ablogTr.csv")
+ng4p2atwitTr <- read.csv("./pdata/ng4p2atwitTr.csv")
+ng4p2anewsTr <- read.csv("./pdata/ng4p2anewsTr.csv")
+system.time(ng4Tr <- rbind(ng4p2ablogTr, ng4p2atwitTr, ng4p2anewsTr))
 system.time(ng4Tr <- ng4p2(ng4Tr))
-
 write.csv(ng4Tr, "./pdata/ng4Tr.csv")
+
+##BUILD THE PREDS DATA
+ng2Tr <- read.csv("./pdata/ng2Tr.csv")
+ng3Tr <- read.csv("./pdata/ng3Tr.csv")
+ng4Tr <- read.csv("./pdata/ng4Tr.csv")
+
+ng2Tr <- ng2Tr[,2:7]
+ng3Tr <- ng3Tr[,2:7]
+
+predsfull <- rbind(ng4Tr, ng3Tr, ng2Tr)
+write.csv(predsfull, "./pdata/predsfull.csv")
 
 ##PREDS
 simpleFpreds <- function(word1, word2, word3){
-    preds <- ngFb1
+    preds <- predsfull
     if(length(grep(word3, preds$w3))>0){
         preds <- preds[grep(word3, preds$w3), ]
     }else{preds <- preds}

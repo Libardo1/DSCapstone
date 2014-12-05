@@ -1,0 +1,57 @@
+simpleFpreds <- function(word1, word2, word3){
+    preds <- predsfull
+    if(length(dim(preds[preds$w3==word3, ])[1])>0){ ##works, but slower than grep by a lot
+        preds <- preds[preds$w3==word3, ]  ############can we make grep match exactly (fixed=T didn't work)
+    }else{preds <- preds}
+    if(length(grep(word2, preds$w2))>0){
+        preds <- preds[grep(word2, preds$w2), ]
+    }else{preds <- preds}
+    if(length(grep(word1, preds$w1))>0){
+        preds <- preds[grep(word1, preds$w1), ]
+    }else{preds <- preds}
+    #print(preds$w4[1:3]) 
+    View(preds)
+}
+
+predsNoAlt <- function(word1, word2, word3){
+    preds <- data  ##give preds a tag of n
+    #word3, 2grams
+    if(length(grep(word3, preds$w3))>0){
+        preds <- preds[grep(word3, preds$w3), ]
+    }else{preds <- preds[-preds$tag==2, ]}
+    ##maybe do a backoff for w3
+    #word2, 3grams
+    if(length(grep(word2, preds$w2))>0){
+        preds <- preds[grep(word2, preds$w2), ]
+    }else{preds <- preds[-preds$tag==3, ]}
+    #word1, 4grams
+    if(length(grep(word1, preds$w1))>0){
+        preds <- preds[grep(word1, preds$w1), ]
+    }else{preds <- preds}
+    #print(preds$w4[1:3]) 
+    View(preds)
+}
+
+predsWildAlt <- function(word1, word2, word3){
+    preds <- data  ##give preds a tag of n
+    #word3, 2grams
+    if(length(grep(word3, preds$w3))>0){
+        preds <- preds[grep(word3, preds$w3), ]
+    }else{preds <- preds[-preds$tag==2, ]}
+    ##maybe do a backoff for w3
+    #word2, 3grams
+    if(length(grep(word2, preds$w2))>0){
+        preds <- preds[grep(word2, preds$w2), ]
+    }else{preds <- preds[-preds$tag==3, ]}
+    #word1, 4grams
+    if(length(grep(word1, preds$w1))>0){
+        preds <- preds[grep(word1, preds$w1), ]
+    }else{preds <- preds[-preds$tag==4, ]}
+    #wildcard
+    if(length(preds$w4)>0{View(preds)
+    }else{if(length(grep(word2, data$w3))>0){
+            preds <- data[grep(word2, data$w3), ]; View(preds)
+            }else{preds <- data[grep(word1, data$w3), ]; View(preds)}
+    }
+    #print(preds$w4[1:3]) 
+}
