@@ -252,10 +252,10 @@ tokenizer <- function(data, number) {
     dcount <- data.frame(table(word))
     dcount <- dcount[grep(".+", dcount$word), ] #remove blank 
     #should we remove periods? dcount <- dcount[-grep("\\.", dcount$word), ]
-        dashi <- grep("-", dcount$word) #all dashes
-        gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$word) #good dashes
-        dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
-        bdashi <- dashi[-dmatch] #bad dashes
+    dashi <- grep("-", dcount$word) #all dashes
+    gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$word) #good dashes
+    dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
+    bdashi <- dashi[-dmatch] #bad dashes
     dcount <- dcount[-bdashi, ] #removes bad dashes
     dcount <- dcount[-grep("fuck|shit|damn|crap|bitch", dcount$word, ignore.case=T), ]
     dcount <- dcount[order(dcount$Freq, decreasing=T),]
@@ -603,13 +603,13 @@ gcount$w3 <- c("d", "b", "a", "d", "c")
 I want to be able to do a function like this:
 
 predictor <- function(word1, word2){
-    if(length(grep("word1", gcount$w1))>0){
-        preds <- gcount[grep("word1", gcount$w1), ]
-        }else{preds <- gcount}
-    if(length(grep("word2", preds$w2))>0){
-        preds <- preds[grep("word2", preds$w2), ]
-        }else{preds <- preds}
-    print(preds$w3[1]) 
+if(length(grep("word1", gcount$w1))>0){
+preds <- gcount[grep("word1", gcount$w1), ]
+}else{preds <- gcount}
+if(length(grep("word2", preds$w2))>0){
+preds <- preds[grep("word2", preds$w2), ]
+}else{preds <- preds}
+print(preds$w3[1]) 
 }
 
 Obviously, this doesn't work because grep() only takes a regular expression within quotation marks
@@ -619,10 +619,10 @@ When I run it like this (manually entering "a" and "b") it works like I want it 
 
 if(length(grep("a", gcount$w1))>0){
     preds <- gcount[grep("a", gcount$w1), ]
-    }else{preds <- gcount}
+}else{preds <- gcount}
 if(length(grep("b", preds$w2))>0){
     preds <- preds[grep("b", preds$w2), ]
-    }else{preds <- preds}
+}else{preds <- preds}
 print(preds$w3[1]) 
 
 Anyone know if there's a trick to be able to use grep like this?
@@ -672,18 +672,18 @@ splitter <- function(data, number) {
     word
 }
 twitsplit <- splitter(twitter, 500)
-    
-    dcount <- data.frame(table(word))
-    dcount <- dcount[grep(".+", dcount$word), ] #remove blank 
-    #should we remove periods? dcount <- dcount[-grep("\\.", dcount$word), ]
-    dashi <- grep("-", dcount$word) #all dashes
-    gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$word) #good dashes
-    dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
-    bdashi <- dashi[-dmatch] #bad dashes
-    dcount <- dcount[-bdashi, ] #removes bad dashes
-    dcount <- dcount[-grep("fuck|shit|damn|crap|bitch", dcount$word, ignore.case=T), ]
-    dcount <- dcount[order(dcount$Freq, decreasing=T),]
-    dcount
+
+dcount <- data.frame(table(word))
+dcount <- dcount[grep(".+", dcount$word), ] #remove blank 
+#should we remove periods? dcount <- dcount[-grep("\\.", dcount$word), ]
+dashi <- grep("-", dcount$word) #all dashes
+gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$word) #good dashes
+dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
+bdashi <- dashi[-dmatch] #bad dashes
+dcount <- dcount[-bdashi, ] #removes bad dashes
+dcount <- dcount[-grep("fuck|shit|damn|crap|bitch", dcount$word, ignore.case=T), ]
+dcount <- dcount[order(dcount$Freq, decreasing=T),]
+dcount
 }
 
 #using make.ngrams
@@ -829,10 +829,10 @@ ngrammer <- function(data, number) {
     ngrams <- make.ngrams(allw, 3)
     ngrams
     dcount <- data.frame(table(ngrams))
-        dashi <- grep("-", dcount$ngrams)
-        gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
-        dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
-        bdashi <- dashi[-dmatch]
+    dashi <- grep("-", dcount$ngrams)
+    gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
+    dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
+    bdashi <- dashi[-dmatch]
     dcount <- dcount[-bdashi, ]
     dcount <- dcount[order(dcount$Freq, decreasing=T),]
     dcount
@@ -857,10 +857,10 @@ ngrammer <- function(data, number) {
     ngrams <- make.ngrams(allw, 3)
     ngrams
     dcount <- data.frame(table(ngrams))
-        dashi <- grep("-", dcount$ngrams)
-        gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
-        dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
-        bdashi <- dashi[-dmatch]
+    dashi <- grep("-", dcount$ngrams)
+    gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
+    dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
+    bdashi <- dashi[-dmatch]
     dcount <- dcount[-bdashi, ]
     dcount <- dcount[-grep("[!\\?#\\.] ?[!\\?#\\.]+", dcount$ngrams), ]
     dcount <- dcount[order(dcount$Freq, decreasing=T),]
@@ -942,10 +942,10 @@ ngcount <- function(data, number) {
     ngrams <- make.ngrams(allw, 3)
     ngrams
     dcount <- data.frame(table(ngrams))
-        dashi <- grep("-", dcount$ngrams)
-        gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
-        dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
-        bdashi <- dashi[-dmatch]
+    dashi <- grep("-", dcount$ngrams)
+    gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
+    dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
+    bdashi <- dashi[-dmatch]
     dcount <- dcount[-bdashi, ]
     dcount <- dcount[-grep("[!\\?#\\.] ?[!\\?#\\.]+", dcount$ngrams), ]
     dcount <- dcount[-grep("#[A-Za-z0-9]+", dcount$ngrams), ]
@@ -972,10 +972,10 @@ ngcount <- function(data, number) {
     ngrams <- make.ngrams(allw, 3)
     ngrams
     dcount <- data.frame(table(ngrams))
-        dashi <- grep("-", dcount$ngrams)
-        gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
-        dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
-        bdashi <- dashi[-dmatch]
+    dashi <- grep("-", dcount$ngrams)
+    gdashi <- grep("[A-Za-z0-9]+-[A-Za-z0-9]+", dcount$ngrams)
+    dmatch <- match(gdashi, dashi) #indices of dashi that are matched by gdashi
+    bdashi <- dashi[-dmatch]
     dcount <- dcount[-bdashi, ]
     dcount <- dcount[-grep("[!\\?#\\.] ?[!\\?#\\.]+", dcount$ngrams), ]
     dcount <- dcount[-grep("#[A-Za-z0-9]+", dcount$ngrams), ]
@@ -1275,10 +1275,10 @@ w2 <- grep("[A-Za-z1-9]+$", s1, value=TRUE)
 
 
 words <- function(word) {
-word <- gsub("[^A-Za-z0-9!\\?'#\\. -]", "", word) #what we're keeping
-word <- gsub("([\\.\\?!])", "~\\1~", word) #split at . ? !
-word <- unlist(strsplit(word, "[ ~]")) #actually make the split
-word
+    word <- gsub("[^A-Za-z0-9!\\?'#\\. -]", "", word) #what we're keeping
+    word <- gsub("([\\.\\?!])", "~\\1~", word) #split at . ? !
+    word <- unlist(strsplit(word, "[ ~]")) #actually make the split
+    word
 }
 
 > s1[length(s1)]
@@ -1453,33 +1453,33 @@ NA   NA   <NA>   NA <NA> <NA> <NA>
     
     # I don't get it
     
-#fixing it with na.omit
-predtableE <- function(sentence) {
-    preds <- datafull
-    sentence <- gsub("[^A-Za-z0-9'# -]", "", sentence) #what we're keeping
-    words <- unlist(strsplit(sentence, "[ ]")) #actually make the split
-    word2 <- words[length(words)]
-    if(dim(na.omit(preds[preds$w2==word2, ]))[1]>0){
-        preds <- preds[preds$w2==word2, ]
-    }else{word2 <- words[length(words)-1]}
-    if(dim(na.omit(preds[preds$w2==word2, ]))[1]>0){
-        preds <- preds[preds$w2==word2, ]
-    }else{word2 <- words[length(words)-2]}
-    if(dim(na.omit(preds[preds$w2==word2, ]))[1]>0){
-        preds <- preds[preds$w2==word2, ]
-    }else{preds <- preds; word2 <- words[length(words)]}
-    word1 <- words[max(grep(word2, words))-1]
-    if(dim(na.omit(preds[preds$w1==word1, ]))[1]>0){
-        preds <- preds[preds$w1==word1, ]
-    }else{word1 <- words[max(grep(word2, words))-2]}
-    if(dim(na.omit(preds[preds$w1==word1, ]))[1]>0){
-        preds <- preds[preds$w1==word1, ]
-    }else{word1 <- words[max(grep(word2, words))-3]}
-    if(dim(na.omit(preds[preds$w1==word1, ]))[1]>0){
-        preds <- preds[preds$w1==word1, ]
-    }else{preds <- preds}
-    View(na.omit(preds))
-}
+    #fixing it with na.omit
+    predtableE <- function(sentence) {
+        preds <- datafull
+        sentence <- gsub("[^A-Za-z0-9'# -]", "", sentence) #what we're keeping
+        words <- unlist(strsplit(sentence, "[ ]")) #actually make the split
+        word2 <- words[length(words)]
+        if(dim(na.omit(preds[preds$w2==word2, ]))[1]>0){
+            preds <- preds[preds$w2==word2, ]
+        }else{word2 <- words[length(words)-1]}
+        if(dim(na.omit(preds[preds$w2==word2, ]))[1]>0){
+            preds <- preds[preds$w2==word2, ]
+        }else{word2 <- words[length(words)-2]}
+        if(dim(na.omit(preds[preds$w2==word2, ]))[1]>0){
+            preds <- preds[preds$w2==word2, ]
+        }else{preds <- preds; word2 <- words[length(words)]}
+        word1 <- words[max(grep(word2, words))-1]
+        if(dim(na.omit(preds[preds$w1==word1, ]))[1]>0){
+            preds <- preds[preds$w1==word1, ]
+        }else{word1 <- words[max(grep(word2, words))-2]}
+        if(dim(na.omit(preds[preds$w1==word1, ]))[1]>0){
+            preds <- preds[preds$w1==word1, ]
+        }else{word1 <- words[max(grep(word2, words))-3]}
+        if(dim(na.omit(preds[preds$w1==word1, ]))[1]>0){
+            preds <- preds[preds$w1==word1, ]
+        }else{preds <- preds}
+        View(na.omit(preds))
+    }
 
 ######NON-NGRAM METHODS#######
 
@@ -1612,7 +1612,7 @@ twoGram <- function(ng, tk) {
 
 #works!
 tkw1 <- function(i)ifelse(length(tk$Freq[tk$word==ng$w1[i]]) > 0, 
-               tk$Freq[tk$word==ng$w1[i]], 0)
+                          tk$Freq[tk$word==ng$w1[i]], 0)
 
 # can't get apply to work, maybe revisit later
 apply (ng, 1, function(tk, ng) {
@@ -1673,9 +1673,9 @@ ng5$rate <- apply(ng5, 1, TGrate)
 #
 TGrate <- function(ng, w1, w2, Freq){
     tkw1 <- ifelse(length(tk$Freq[tk$word==w1]) > 0, 
-               tk$Freq[tk$word==w1], 0)
+                   tk$Freq[tk$word==w1], 0)
     tkw2 <- ifelse(length(tk$Freq[tk$word==w2]) > 0,
-               tk$Freq[tk$word==w2], 0)
+                   tk$Freq[tk$word==w2], 0)
     dnm <- tkw1 + tkw2
     dnm <- ifelse(dnm >= 1, dnm, Freq)
     rate <- as.numeric(Freq) / as.numeric(dnm)
