@@ -342,18 +342,21 @@ ng3Tr <- ng3Tr[,2:7]
 predsfull <- rbind(ng4Tr, ng3Tr, ng2Tr)
 write.csv(predsfull, "./pdata/predsfull.csv")
 
-##PREDS
-simpleFpreds <- function(word1, word2, word3){
-    preds <- predsfull
-    if(length(grep(word3, preds$w3))>0){
-        preds <- preds[grep(word3, preds$w3), ]
-    }else{preds <- preds}
-    if(length(grep(word2, preds$w2))>0){
-        preds <- preds[grep(word2, preds$w2), ]
-    }else{preds <- preds}
-    if(length(grep(word1, preds$w1))>0){
-        preds <- preds[grep(word1, preds$w1), ]
-    }else{preds <- preds}
-    #print(preds$w4[1:3]) 
-    View(preds)
-}
+#TWEAKING PREDSFULL
+plot(predsfull$X, predsfull$Freq, type="l", ylim=c(0,50))
+
+sum4 <- sum(predsfull$Freq[predsfull$tag==4])
+sum3 <- sum(predsfull$Freq[predsfull$tag==3])
+sum2 <- sum(predsfull$Freq[predsfull$tag==2])
+
+predsfullp <- predsfull
+predsfullp$perp[predsfull$tag==4] <- predsfullp$Freq[predsfull$tag==4]/sum4
+predsfullp$perp[predsfull$tag==3] <- predsfullp$Freq[predsfull$tag==3]/sum3
+predsfullp$perp[predsfull$tag==2] <- predsfullp$Freq[predsfull$tag==2]/sum2
+
+plot(predsfullp$X, predsfullp$perp, type="l", ylim=c(0,.000005))
+
+predsfullperp <- predsfullp[order(predsfullp$perp, decreasing=T),]
+write.csv(predsfullperp, "./pdata/predsfullperp.csv")
+
+
